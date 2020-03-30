@@ -37,6 +37,8 @@ set_prompt () {
     	# If root, just print the host in red. Otherwise, print the current user and host in green.
     	if [[ $EUID == 0 ]]; then
     	    	PS1+="$Red\\h "
+        elif [ -n "$SSH_CLIENT" ]; then
+                PS1+="$Red\\u@\\h "
     	else
     	    	PS1+="$Green\\u@\\h "
     	fi
