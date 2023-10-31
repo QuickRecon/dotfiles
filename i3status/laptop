@@ -1,0 +1,84 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        colors = true
+        interval = 5
+}
+order += "cpu_temperature 0"
+order += "cpu_usage"
+#order += "ipv6"
+order += "volume master"
+#order += "volume mic"
+order += "disk /"
+#order += "disk /home/aren/Data"
+#order += "run_watch DHCP"
+#order += "run_watch VPN"
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "battery 0"
+#order += "load"
+order += "tztime local"
+
+wireless _first_ {
+        format_up = "WIFI: (%quality at %essid) %ip"
+        format_down = "WIFI: down"
+}
+
+ethernet _first_ {
+        # if you use %speed, i3status requires root privileges
+        format_up = "ETHERNET: %ip (%speed)"
+        format_down = "ETHERNET: down"
+}
+
+battery 0 {
+        format = "%status %percentage %remaining (%consumption)"
+        last_full_capacity = true
+}
+
+run_watch DHCP {
+        pidfile = "/var/run/dhclient*.pid"
+}
+
+run_watch VPN {
+        pidfile = "/var/run/vpnc/pid"
+}
+
+tztime local {
+        format = "%Y-%m-%d %H:%M:%S"
+}
+
+load {
+        format = "%1min"
+}
+
+disk "/" {
+        format = "SSD: %avail"
+}
+
+disk "/home/aren/Data" {
+	format = "HDD: %avail/ %total"
+}
+
+cpu_usage {
+	format = "CPU: %usage"
+}
+
+cpu_temperature 0 {
+ format = "TEMP: %degrees °C"
+ max_threshold = 80
+ path = "/sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input"
+}
+
+volume master{
+	format = "♪: %volume" 
+	format_muted = "♪: Muted"
+	device = "default"
+	mixer = "Master"
+	mixer_idx = 0
+}
